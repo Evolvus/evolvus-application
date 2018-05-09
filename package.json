@@ -1,17 +1,26 @@
 {
   "name": "evolvus-applicationentity",
-  "version": "0.0.1",
-  "description": "Application Entity module",
+  "version": "0.0.5",
+  "description": "evolvus-applicationentity is a component that models the different Applications that are based on Project Zero.",
   "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Evolvus/evolvus-applicationentity.git"
+  },
+  "keywords": [
+    "evolvus",
+    "application",
+    "platform"
+  ],
+  "author": "Kavya",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Evolvus/evolvus-applicationentity/issues"
+  },
+  "homepage": "https://github.com/Evolvus/evolvus-applicationentity#readme",
   "dependencies": {
     "jsonschema": "^1.2.4",
     "mongoose": "^5.0.17"
