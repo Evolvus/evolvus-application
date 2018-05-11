@@ -9,10 +9,14 @@ module.exports.schema = {
       "type": "number"
     },
     "code": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4
     },
     "applicationName": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100
     },
     "enabled": {
       "type": "boolean",
@@ -37,6 +41,11 @@ module.exports.schema = {
     "updatedDate": {
       "type": ["string", "null"],
       "format": "date-time"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 255
     }
   },
   "required": ["applicationId", "code", "applicationName", "createdBy", "createdDate"]
