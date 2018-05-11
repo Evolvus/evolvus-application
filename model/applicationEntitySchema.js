@@ -2,14 +2,14 @@
 
 module.exports.schema = {
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "title": "applicationEntity",
+  "title": "applicationModel",
   "type": "object",
   "properties": {
     "applicationId": {
       "type": "number"
     },
     "code": {
-      "type": "number"
+      "type": "string"
     },
     "applicationName": {
       "type": "string"
@@ -35,7 +35,8 @@ module.exports.schema = {
       "format": "date-time"
     },
     "updatedDate": {
-      "type": ["string", "null"]
+      "type": ["string", "null"],
+      "format": "date-time"
     }
   },
   "required": ["applicationId", "code", "applicationName", "createdBy", "createdDate"]
