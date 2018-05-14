@@ -9,29 +9,42 @@ var applicationSchema = new mongoose.Schema({
       message: '{VALUE} is not an integer value'
     }
   },
-  code: {
-    type: Number,
+  applicationCode: {
+    type: String,
     required: true,
     unique: true,
-    validate: {
-      validator: Number.isInteger,
-      message: '{VALUE} is not an integer value'
-    }
+    minlength: 1,
+    maxlength: 4
   },
   applicationName: {
     type: String,
-    required: true
+    required: true,
+    minlength: 1,
+    maxlength: 100
   },
   enabled: {
     type: Boolean,
     default: true
+  },
+  description: {
+    type: String,
+    minlength: 0,
+    maxlength: 255
+  }
+  logo: {
+    data: Buffer,
+    contentType: String
+  },
+  favicon: {
+    data: Buffer,
+    contentType: String
   },
   createdBy: {
     type: String,
     required: true
   },
   updatedBy: {
-    type: String,
+    type: String
   },
   createdDate: {
     type: Date,

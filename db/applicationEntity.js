@@ -35,7 +35,7 @@ module.exports.FindByCode = (codevalue) => {
   return new Promise((resolve, reject) => {
     try {
       ApplicationEntity.findOne({
-        code: codevalue
+        applicationCode: codevalue
       }).then((app) => {
         if (app) {
           debug(`application found ${app.applicationName}`);
@@ -59,7 +59,7 @@ module.exports.FindByCodeAndEnabled = (codeValue, enabledValue) => {
     try {
       ApplicationEntity.findOne({
         $and: [{
-          code: codeValue
+          applicationCode: codeValue
         }, {
           enabled: enabledValue
         }]

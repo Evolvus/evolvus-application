@@ -8,7 +8,7 @@ module.exports.schema = {
     "applicationId": {
       "type": "number"
     },
-    "code": {
+    "applicationCode": {
       "type": "string",
       "minLength": 1,
       "maxLength": 4
