@@ -30,7 +30,7 @@ var applicationSchema = new mongoose.Schema({
     type: String,
     minlength: 0,
     maxlength: 255
-  }
+  },
   logo: {
     type: String
   },
