@@ -48,5 +48,5 @@ module.exports.schema = {
       "maxLength": 255
     }
   },
-  "required": ["applicationId", "code", "applicationName", "createdBy", "createdDate"]
+  "required": ["applicationId", "applicationCode", "applicationName", "createdBy", "createdDate"]
 };
