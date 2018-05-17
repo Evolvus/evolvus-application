@@ -32,12 +32,10 @@ var applicationSchema = new mongoose.Schema({
     maxlength: 255
   }
   logo: {
-    data: Buffer,
-    contentType: String
+    type: String
   },
   favicon: {
-    data: Buffer,
-    contentType: String
+    type: String
   },
   createdBy: {
     type: String,
