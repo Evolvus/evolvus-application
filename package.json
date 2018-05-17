@@ -1,6 +1,6 @@
 {
   "name": "evolvus-applicationentity",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "evolvus-applicationentity is a component that models the different Applications that are based on Project Zero.",
   "main": "index.js",
   "scripts": {
