@@ -1,18 +1,18 @@
-# What is evolvus-applicationentity ?
+# What is evolvus-application ?
 
-`evolvus-applicationentity` is a component that models the different Applications that are based on Project Zero.
+`evolvus-application` is a component that models the different Applications that are based on Project Zero.
 
 ## Installation
 
 ### Node.js
-`evolvus-applicationentity` is available on [npm](http://npmjs.org). To install it, type:
+`evolvus-application` is available on [npm](http://npmjs.org). To install it, type:
 
 ```bash
-$ npm install evolvus-applicationentity --save
+$ npm install evolvus-application --save
 ```
 
 ## Code Quality
-Please check the code quality here - https://app.codacy.com/app/Evolvus/evolvus-applicationentity/dashboard
+Please check the code quality here - https://app.codacy.com/app/Evolvus/evolvus-application/dashboard
 
 ## Usage
 
@@ -25,7 +25,7 @@ Please make sure you follow our [Code Of Conduct](CODE_OF_CONDUCT.md) and we als
 
 ## Contributors
 
-Please see the full [Contributors Graph](https://github.com/evolvus/evolvus-applicationentity/graphs/contributors) for our list of contributors.
+Please see the full [Contributors Graph](https://github.com/evolvus/evolvus-application/graphs/contributors) for our list of contributors.
 
 ## Core Contributors
 

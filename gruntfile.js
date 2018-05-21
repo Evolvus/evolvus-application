@@ -10,7 +10,7 @@ module.exports = (grunt) => {
     },
     env: {
       test: {
-        DEBUG: "evolvus-applicationentity*"
+        DEBUG: "evolvus-application*"
       }
     },
     jshint: {
@@ -18,7 +18,7 @@ module.exports = (grunt) => {
         "esversion": 6
       },
       files: {
-        src: ["gruntfile.js", "index.js", "db/*.js", "test/indexTest.js", "test/**/*.js", "model/*.js"]
+        src: ["gruntfile.js", "index.js", "db/*.js", "test/index.test.js", "test/**/*.test.js", "model/*.js"]
       }
     },
     watch: {

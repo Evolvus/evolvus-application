@@ -1,14 +1,14 @@
 {
-  "name": "evolvus-applicationentity",
-  "version": "0.0.8",
-  "description": "evolvus-applicationentity is a component that models the different Applications that are based on Project Zero.",
+  "name": "evolvus-application",
+  "version": "0.0.5",
+  "description": "evolvus-application is a component that models the different Applications that are based on Project Zero.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Evolvus/evolvus-applicationentity.git"
+    "url": "git+https://github.com/Evolvus/evolvus-application.git"
   },
   "keywords": [
     "evolvus",
@@ -18,9 +18,9 @@
   "author": "Kavya",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Evolvus/evolvus-applicationentity/issues"
+    "url": "https://github.com/Evolvus/evolvus-application/issues"
   },
-  "homepage": "https://github.com/Evolvus/evolvus-applicationentity#readme",
+  "homepage": "https://github.com/Evolvus/evolvus-application#readme",
   "dependencies": {
     "jsonschema": "^1.2.4",
     "mongoose": "^5.0.17"
@@ -29,6 +29,7 @@
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "grunt": "^1.0.2",
+    "grunt-cli": "^1.2.0",
     "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-watch": "^1.0.1",
     "grunt-env": "^0.4.4",
