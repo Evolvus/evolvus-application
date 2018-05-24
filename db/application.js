@@ -37,12 +37,19 @@ module.exports.updateApplication = (id, update) => {
         _id: new ObjectId(id)
       }).then((app) => {
         if (app) {
+          var updateObject = new Application(update);
+          var errors = updateObject.validateSync();
+          if (errors != null) {
+            throw new Error(`IllegalArgumentException: ${errors.message}`);
+          }
           Application.update({
             _id: id
-          }, update).then((response) => {
+          }, {
+            $set: update
+          }).then((response) => {
             if (response.nModified === 0) {
               debug("failed to update");
-              reject("Sorry! this data to be updated is invalid");
+              reject("Sorry! this data to be updated is invalid or you are trying to update with the same values");
             } else {
               debug("updated successfully");
               resolve(response);

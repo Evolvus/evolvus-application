@@ -20,7 +20,13 @@ var applicationSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 1,
-    maxlength: 100
+    maxlength: 100,
+    validate: {
+      validator: function(v) {
+        return /^[A-Za-z ]*$/.test(v);
+      },
+      message: "{PATH} can contain only alphabets and spaces"
+    }
   },
   enabled: {
     type: Boolean,
