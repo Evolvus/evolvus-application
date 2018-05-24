@@ -19,14 +19,14 @@ describe("Testing index.js", () => {
   });
   var testApp = {
     applicationId: 1,
-    applicationName: "Docket",
+    applicationName: 'Docket',
     applicationCode: "Dock",
     createdBy: "SYSTEM",
     createdDate: new Date().toISOString()
   };
   var testApp1 = {
     applicationId: 2,
-    applicationName: "Flux-CDA",
+    applicationName: "Flux CDA",
     applicationCode: "CDA",
     createdBy: "SYSTEM",
     createdDate: new Date().toISOString()
@@ -69,13 +69,13 @@ describe("Testing index.js", () => {
       });
     });
 
-    it("should return a application identified by Code", (done) => {
-      let res = application.FindByCode("Dock");
-      expect(res).to.be.eventually.be.a("object");
-      expect(res).to.be.eventually.have.property("applicationCode")
-        .to.deep.equal(testApp.applicationCode);
-      done();
-    });
+    // it("should return a application identified by Code", (done) => {
+    //   let res = application.FindByCode("Dock");
+    //   expect(res).to.be.eventually.be.a("object");
+    //   expect(res).to.be.eventually.have.property("applicationCode")
+    //     .to.deep.equal(testApp.applicationCode);
+    //   done();
+    // });
 
     it("should return empty object i.e {} as no application is identified by this Code ", (done) => {
       let res = application.FindByCode("Doc");
@@ -216,15 +216,32 @@ describe("Testing index.js", () => {
 
     it('should update a application', (done) => {
       application.updateApplication(id, {
-        applicationName: "newDocket"
+        applicationId: 1,
+        applicationName: "DocketNew",
+        applicationCode: "Dock",
+        createdBy: "SYSTEM",
+        createdDate: new Date().toISOString()
       }).then((res) => {
         var result = application.getAll().then((apps) => {
           expect(apps.length).to.eql(2);
           expect(apps[0]).to.have.property('applicationName')
-            .to.eql('newDocket');
+            .to.eql("DocketNew");
           done();
         });
       });
+    });
+
+    it("should throw IllegalArgumentException for wrong type of applicationName input ", (done) => {
+      let res = application.updateApplication(id, {
+        applicationId: 1,
+        applicationName: "Flux-CDA",
+        applicationCode: "Dock",
+        createdBy: "SYSTEM",
+        createdDate: new Date().toISOString()
+      });
+      expect(res)
+        .to.eventually.to.be.rejectedWith("IllegalArgumentException")
+        .notify(done);
     });
 
 
@@ -261,15 +278,6 @@ describe("Testing index.js", () => {
       let res = application.updateApplication(id, null);
       expect(res)
         .to.eventually.to.be.rejectedWith("IllegalArgumentException")
-        .notify(done);
-    });
-
-    it("should be rejected when the data to be updated is invalid ", (done) => {
-      let res = application.updateApplication(id, {
-        application: "value"
-      });
-      expect(res)
-        .to.eventually.to.be.rejectedWith("Sorry! this data to be updated is invalid")
         .notify(done);
     });
   });

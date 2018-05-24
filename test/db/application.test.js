@@ -206,9 +206,7 @@ describe("Applications db testing", () => {
     });
 
     it("should be rejected when data to be updated is invalid", (done) => {
-      var res = application.updateApplication(id, {
-        application: "DOCKET"
-      });
+      var res = application.updateApplication(id, testApp);
       expect(res).to.be.rejectedWith("Sorry! this data to be updated is invalid")
         .notify(done);
     });
