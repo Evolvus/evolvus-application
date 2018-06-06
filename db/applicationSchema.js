@@ -1,14 +1,6 @@
 const mongoose = require('mongoose');
 
 var applicationSchema = new mongoose.Schema({
-  applicationId: {
-    type: Number,
-    required: true,
-    validate: {
-      validator: Number.isInteger,
-      message: '{VALUE} is not an integer value'
-    }
-  },
   applicationCode: {
     type: String,
     required: true,

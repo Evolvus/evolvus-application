@@ -5,9 +5,6 @@ module.exports.schema = {
   "title": "applicationModel",
   "type": "object",
   "properties": {
-    "applicationId": {
-      "type": "number"
-    },
     "applicationCode": {
       "type": "string",
       "minLength": 1,
@@ -48,5 +45,5 @@ module.exports.schema = {
       "maxLength": 255
     }
   },
-  "required": ["applicationId", "applicationCode", "applicationName", "createdBy", "createdDate"]
+  "required": ["applicationCode", "applicationName", "createdBy", "createdDate"]
 };

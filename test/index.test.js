@@ -5,7 +5,7 @@ const expect = chai.expect;
 
 var application = require("../index");
 var db = require("../db/application");
-var MONGO_DB_URL = process.env.MONGODB_URI || "mongodb://localhost/TestApplication";
+var MONGO_DB_URL = process.env.MONGODB_URI || "mongodb://10.10.69.204/TestPlatform_Dev";
 
 chai.use(chaiAsPromised);
 
@@ -18,14 +18,12 @@ describe("Testing index.js", () => {
     });
   });
   var testApp = {
-    applicationId: 1,
     applicationName: 'Docket',
     applicationCode: "Dock",
     createdBy: "SYSTEM",
     createdDate: new Date().toISOString()
   };
   var testApp1 = {
-    applicationId: 2,
     applicationName: "Flux CDA",
     applicationCode: "CDA",
     createdBy: "SYSTEM",
@@ -69,13 +67,13 @@ describe("Testing index.js", () => {
       });
     });
 
-    // it("should return a application identified by Code", (done) => {
-    //   let res = application.FindByCode("Dock");
-    //   expect(res).to.be.eventually.be.a("object");
-    //   expect(res).to.be.eventually.have.property("applicationCode")
-    //     .to.deep.equal(testApp.applicationCode);
-    //   done();
-    // });
+    it("should return a application identified by Code", (done) => {
+      let res = application.FindByCode("Dock");
+      expect(res).to.be.eventually.be.a("object");
+      expect(res).to.be.eventually.have.property("applicationCode")
+        .to.deep.equal(testApp.applicationCode);
+      done();
+    });
 
     it("should return empty object i.e {} as no application is identified by this Code ", (done) => {
       let res = application.FindByCode("Doc");
@@ -115,8 +113,8 @@ describe("Testing index.js", () => {
       expect(res).to.be.eventually.be.a('object');
       expect(res).to.be.eventually.have.property('applicationCode')
         .to.deep.equal(testApp.applicationCode);
-      expect(res).to.be.eventually.have.property('applicationId')
-        .to.deep.equal(testApp.applicationId);
+      expect(res).to.be.eventually.have.property('applicationCode')
+        .to.deep.equal(testApp.applicationCode);
       done();
     });
 
@@ -216,7 +214,6 @@ describe("Testing index.js", () => {
 
     it('should update a application', (done) => {
       application.updateApplication(id, {
-        applicationId: 1,
         applicationName: "DocketNew",
         applicationCode: "Dock",
         createdBy: "SYSTEM",
@@ -233,7 +230,6 @@ describe("Testing index.js", () => {
 
     it("should throw IllegalArgumentException for wrong type of applicationName input ", (done) => {
       let res = application.updateApplication(id, {
-        applicationId: 1,
         applicationName: "Flux-CDA",
         applicationCode: "Dock",
         createdBy: "SYSTEM",

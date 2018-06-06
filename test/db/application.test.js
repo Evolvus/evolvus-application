@@ -4,7 +4,7 @@ const chaiAsPromised = require("chai-as-promised");
 const expect = chai.expect;
 
 var application = require("../../db/application");
-var MONGO_DB_URL = process.env.MONGO_DB_URL || "mongodb://localhost/TestApplication";
+var MONGO_DB_URL = process.env.MONGO_DB_URL || "mongodb://10.10.69.204/TestPlatform_Dev";
 
 chai.use(chaiAsPromised);
 
@@ -17,14 +17,12 @@ describe("Applications db testing", () => {
     });
   });
   var testApp = {
-    "applicationId": 1,
     "applicationName": "Docket",
     "applicationCode": "Dock",
     "createdBy": "Kavya",
     "createdDate": Date.now()
   };
   var testApp1 = {
-    "applicationId": 2,
     "applicationName": "Sprint",
     "applicationCode": "Spri",
     "createdBy": "Srihari",
@@ -41,14 +39,14 @@ describe("Applications db testing", () => {
 
     it("should  save a application into database", (done) => {
       let res = application.saveApplication(testApp);
-      expect(res).to.be.eventually.have.property("applicationId")
-        .to.equal(testApp.applicationId)
+      expect(res).to.be.eventually.have.property("applicationCode")
+        .to.equal(testApp.applicationCode)
         .notify(done);
     });
 
     it("should not  save a invalid application into database", (done) => {
       let res = application.saveApplication({
-        applicationId: 1
+        applicationCode: "1"
       });
       expect(res).to.be.rejectedWith("Application validation failed")
         .notify(done);
@@ -95,8 +93,8 @@ describe("Applications db testing", () => {
       expect(res).to.be.eventually.be.a("object");
       expect(res).to.be.eventually.have.property("applicationCode")
         .to.deep.equal(testApp.applicationCode);
-      expect(res).to.be.eventually.have.property("applicationId")
-        .to.deep.equal(testApp.applicationId);
+      expect(res).to.be.eventually.have.property("applicationCode")
+        .to.deep.equal(testApp.applicationCode);
       done();
     });
 
@@ -171,7 +169,6 @@ describe("Applications db testing", () => {
     //add 2 applications
     let id;
     let update = {
-      applicationId: 12,
       applicationName: "NewDocket",
       applicationCode: "dock",
       createdBy: "KavyaK",
