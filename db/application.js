@@ -43,7 +43,7 @@ module.exports.save = (object) => {
 // if the collectiom has no records it Returns
 // a promise with a result of  empty object i.e. {}
 module.exports.findAll = (limit) => {
-  if(limit < 1) {
+  if (limit < 1) {
     return applicationCollection.find({});
   }
   return applicationCollection.find({}).limit(limit);
@@ -103,6 +103,47 @@ module.exports.findById = (id) => {
     } catch (e) {
       debug(`caught exception: ${e}`);
       reject(e);
+    }
+  });
+};
+
+//Finds one application by its code and updates it with new values
+module.exports.update = (id, update) => {
+  return new Promise((resolve, reject) => {
+    try {
+      applicationCollection.findById({
+        _id: new ObjectId(id)
+      }).then((app) => {
+        if (app) {
+          var updateObject = new applicationCollection(update);
+          var errors = updateObject.validateSync();
+          if (errors != null) {
+            throw new Error(`IllegalArgumentException: ${errors.message}`);
+          }
+          applicationCollection.update({
+            _id: id
+          }, {
+            $set: update
+          }).then((response) => {
+            if (response.nModified === 0) {
+              debug("failed to update");
+              reject("Sorry! this data to be updated is invalid or you are trying to update with the same values");
+            } else {
+              debug("updated successfully");
+              resolve(response);
+            }
+          });
+        } else {
+          debug(`Application not found with id, ${id}`);
+          reject(`There is no such Application with id:${id}`);
+        }
+      }).catch((e) => {
+        debug(`exception on findById ${e}`);
+        reject(e.message);
+      });
+    } catch (e) {
+      debug(`caught exception ${e}`);
+      reject(e.message);
     }
   });
 };

@@ -434,4 +434,104 @@ describe('application model validation', () => {
       }
     });
   });
+
+  describe("testing updateApplication", () => {
+    var id;
+    let object1 = {
+        //add one valid application object here
+        tenantId: "IVL",
+        applicationName: "FLUX CDA",
+        applicationCode: "CDA",
+        createdBy: "Kavya",
+        createdDate: new Date().toISOString()
+      },
+      object2 = {
+        //add one more valid application object here
+        tenantId: "IVL",
+        applicationName: "FLUX RTP",
+        applicationCode: "RTP",
+        createdBy: "Kavya",
+        createdDate: new Date().toISOString()
+      };
+    beforeEach((done) => {
+      db.deleteAll()
+        .then((res) => {
+          db.save(object1)
+            .then((res) => {
+              id = res._id;
+              db.save(object2)
+                .then((res) => {
+                  done();
+                });
+            });
+        });
+    });
+
+    it('should update a application', (done) => {
+      application.update(id, {
+        tenantId: "IVL",
+        applicationName: "DocketNew",
+        applicationCode: "Dock",
+        createdBy: "SYSTEM",
+        createdDate: new Date().toISOString()
+      }).then((res) => {
+        var result = application.getAll(-1).then((apps) => {
+          expect(apps.length).to.eql(2);
+          expect(apps[0]).to.have.property('applicationName')
+            .to.eql("DocketNew");
+          done();
+        });
+      });
+    });
+
+    it("should throw IllegalArgumentException for wrong type of applicationName input ", (done) => {
+      let res = application.update(id, {
+        tenantId: "asa",
+        applicationName: "Flux-CDA",
+        applicationCode: "Dock",
+        createdBy: "SYSTEM",
+        createdDate: new Date().toISOString()
+      });
+      expect(res)
+        .to.eventually.to.be.rejectedWith("IllegalArgumentException")
+        .notify(done);
+    });
+
+
+    it("should throw IllegalArgumentException for undefined Id parameter ", (done) => {
+      let undefinedId;
+      let res = application.update(undefinedId, {
+        applicationName: "Application"
+      });
+      expect(res)
+        .to.eventually.to.be.rejectedWith("IllegalArgumentException")
+        .notify(done);
+    });
+
+    it("should throw IllegalArgumentException for undefined update parameter ", (done) => {
+      let undefinedUpdate;
+      let res = application.update(id, undefinedUpdate);
+      expect(res)
+        .to.eventually.to.be.rejectedWith("IllegalArgumentException")
+        .notify(done);
+    });
+
+    it("should throw IllegalArgumentException for null Id parameter ", (done) => {
+      // an id is a 12 byte string, -1 is an invalid id value+
+      let res = application.update(null, {
+        applicationName: "Application"
+      });
+      expect(res)
+        .to.eventually.to.be.rejectedWith("IllegalArgumentException")
+        .notify(done);
+    });
+
+    it("should throw IllegalArgumentException for null update parameter ", (done) => {
+      // an id is a 12 byte string, -1 is an invalid id value+
+      let res = application.update(id, null);
+      expect(res)
+        .to.eventually.to.be.rejectedWith("IllegalArgumentException")
+        .notify(done);
+    });
+  });
 });

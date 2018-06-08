@@ -185,3 +185,24 @@ module.exports.getOne = (attribute, value) => {
     }
   });
 };
+
+module.exports.update = (id, update) => {
+  return new Promise((resolve, reject) => {
+    try {
+      if (typeof id == "undefined" || id == null || typeof update == "undefined" || update == null) {
+        throw new Error("IllegalArgumentException:id/update is null or undefined");
+      } else {
+        applicationCollection.update(id, update).then((resp) => {
+          debug("updated successfully");
+          resolve("Updated successfully.");
+        }).catch((error) => {
+          debug(`failed to update ${error}`);
+          reject(error);
+        });
+      }
+    } catch (e) {
+      debug(`caught exception ${e}`);
+      reject(e);
+    }
+  });
+};

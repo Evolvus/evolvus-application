@@ -264,4 +264,59 @@ describe("db application testing", () => {
         .notify(done);
     });
   });
+
+  describe('testing update application', () => {
+    //Delete all the recods from database
+    //add 2 applications
+    let id;
+    let update = {
+      tenantId: "IVL",
+      applicationName: "NewApp",
+      applicationCode: "NEW",
+      createdBy: "KavyaK",
+      createdDate: Date.now()
+    };
+    beforeEach((done) => {
+      application.deleteAll().then((res) => {
+        application.save(object1).then((res) => {
+          id = res._id;
+          application.save(object2).then((res) => {
+            done();
+          });
+        });
+      });
+    });
+
+    it('should update a application ', (done) => {
+      application.update(id, update).then((resp) => {
+        var res = application.findAll().then((apps) => {
+          expect(apps).to.be.a('array');
+          expect(apps.length).to.eql(2);
+          expect(apps[0].applicationName).to.eql(update.applicationName);
+          done();
+        });
+      });
+    });
+
+    it("should be rejected when there is no application matching the parameter id", (done) => {
+      var res = application.update("5afe65875e5b3218cf267086", update);
+      expect(res).to.be.rejectedWith(`There is no such Application with id:5afe65875e5b3218cf267086`)
+        .notify(done);
+    });
+
+    it("should be rejected when data to be updated is invalid", (done) => {
+      var res = application.update(id, object1);
+      expect(res).to.be.rejectedWith("Sorry! this data to be updated is invalid or you are trying to update with the same values")
+        .notify(done);
+    });
+
+    it("should be rejected for arbitrary object as Id parameter ", (done) => {
+      // an id is a 12 byte string, -1 is an invalid id value
+      let invalidId = "some value";
+      let res = application.update(invalidId, update);
+      expect(res)
+        .to.eventually.to.be.rejectedWith("must be a single String of 12 bytes")
+        .notify(done);
+    });
+  });
 });
