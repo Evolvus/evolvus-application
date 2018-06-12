@@ -115,27 +115,17 @@ module.exports.update = (id, update) => {
         _id: new ObjectId(id)
       }).then((app) => {
         if (app) {
-          var updateObject = new applicationCollection(update);
-          var errors = updateObject.validateSync();
-          if (errors != null) {
-            throw new Error(`IllegalArgumentException: ${errors.message}`);
-          }
-          applicationCollection.update({
-            _id: id
-          }, {
-            $set: update
-          }).then((response) => {
-            if (response.nModified === 0) {
-              debug("failed to update");
-              reject("Sorry! this data to be updated is invalid or you are trying to update with the same values");
-            } else {
-              debug("updated successfully");
-              resolve(response);
-            }
+          app.set(update);
+          app.save().then((res)=> {
+            debug(`updated successfully ${res}`);
+            resolve(res);
+          }).catch((e)=> {
+            debug(`failed to update ${e}`);
+            reject(e);
           });
         } else {
-          debug(`Application not found with id, ${id}`);
-          reject(`There is no such Application with id:${id}`);
+          debug(`application not found with id, ${id}`);
+          reject(`There is no such application with id:${id}`);
         }
       }).catch((e) => {
         debug(`exception on findById ${e}`);

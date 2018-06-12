@@ -467,33 +467,38 @@ describe('application model validation', () => {
         });
     });
 
-    it('should update a application', (done) => {
-      application.update(id, {
-        tenantId: "IVL",
-        applicationName: "DocketNew",
-        applicationCode: "Dock",
-        createdBy: "SYSTEM",
-        createdDate: new Date().toISOString()
-      }).then((res) => {
-        var result = application.getAll(-1).then((apps) => {
-          expect(apps.length).to.eql(2);
-          expect(apps[0]).to.have.property('applicationName')
-            .to.eql("DocketNew");
-          done();
-        });
+    it('should update a application and have same _id', (done) => {
+      var res=application.update(id,{
+        applicationName: "FLUX RTP",
+        createdBy: "Kavya"
       });
+      expect(res)
+      .to.eventually.be.a("object")
+      .to.have.property("_id")
+      .to.eql(id)
+      .notify(done);
     });
 
-    it("should throw IllegalArgumentException for wrong type of applicationName input ", (done) => {
+    it('should update a application with new values', (done) => {
+      var res=application.update(id,{
+        applicationName: "FLUX RTP",
+        createdBy: "Kavya"
+      });
+      expect(res)
+      .to.eventually.be.a("object")
+      .to.have.property("applicationName")
+      .to.eql("FLUX RTP")
+      .notify(done);
+    });
+
+    it("should be rejected for wrong type of applicationName input ", (done) => {
       let res = application.update(id, {
         tenantId: "asa",
         applicationName: "Flux-CDA",
-        applicationCode: "Dock",
-        createdBy: "SYSTEM",
-        createdDate: new Date().toISOString()
+        applicationCode: "Dock"
       });
       expect(res)
-        .to.eventually.to.be.rejectedWith("IllegalArgumentException")
+        .to.eventually.to.be.rejectedWith("applicationCollection validation failed")
         .notify(done);
     });
 

@@ -96,10 +96,10 @@ describe("db application testing", () => {
     // 1. Delete all records in the table and insert
     //    4 new records.
     // find -should return an array of size equal to value of limit with the
-    // roleMenuItemMaps.
-    // Caveat - the order of the roleMenuItemMaps fetched is indeterminate
+    // applications.
+    // Caveat - the order of the applications fetched is indeterminate
 
-    // delete all records and insert four roleMenuItemMaps
+    // delete all records and insert four applications
     beforeEach((done) => {
       application.deleteAll().then(() => {
         application.save(object1).then((res) => {
@@ -153,7 +153,7 @@ describe("db application testing", () => {
     });
   });
 
-  describe("testing roleMenuItemMap.find without data", () => {
+  describe("testing application.find without data", () => {
     // delete all records
     // find should return empty array
     beforeEach((done) => {
@@ -288,25 +288,16 @@ describe("db application testing", () => {
     });
 
     it('should update a application ', (done) => {
-      application.update(id, update).then((resp) => {
-        var res = application.findAll().then((apps) => {
-          expect(apps).to.be.a('array');
-          expect(apps.length).to.eql(2);
-          expect(apps[0].applicationName).to.eql(update.applicationName);
-          done();
-        });
-      });
+      var res=application.update(id,update);
+      expect(res).to.eventually.be.a("object")
+      .to.have.property("applicationName")
+      .to.eql(update.applicationName)
+      .notify(done);
     });
 
     it("should be rejected when there is no application matching the parameter id", (done) => {
       var res = application.update("5afe65875e5b3218cf267086", update);
-      expect(res).to.be.rejectedWith(`There is no such Application with id:5afe65875e5b3218cf267086`)
-        .notify(done);
-    });
-
-    it("should be rejected when data to be updated is invalid", (done) => {
-      var res = application.update(id, object1);
-      expect(res).to.be.rejectedWith("Sorry! this data to be updated is invalid or you are trying to update with the same values")
+      expect(res).to.be.rejectedWith(`There is no such application with id:5afe65875e5b3218cf267086`)
         .notify(done);
     });
 

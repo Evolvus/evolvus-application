@@ -191,16 +191,23 @@ module.exports.update = (id, update) => {
     try {
       if (typeof id == "undefined" || id == null || typeof update == "undefined" || update == null) {
         throw new Error("IllegalArgumentException:id/update is null or undefined");
-      } else {
+      } 
+      docketObject.name = "application_getOne";
+      docketObject.keyDataAsJSON = `applicationObject ${id} to be updated with  ${update}`;
+      docketObject.details = `application getById initiated`;
+      docketClient.postToDocket(docketObject);
         applicationCollection.update(id, update).then((resp) => {
-          debug("updated successfully");
-          resolve("Updated successfully.");
+          debug("updated successfully",resp);
+          resolve(resp);
         }).catch((error) => {
           debug(`failed to update ${error}`);
           reject(error);
         });
-      }
     } catch (e) {
+      docketObject.name = "application_ExceptionOngetOne";
+      docketObject.keyDataAsJSON = `applicationObject ${id} to be updated with  ${update}`;
+      docketObject.details = `caught Exception on application_getOne ${e.message}`;
+      docketClient.postToDocket(docketObject);
       debug(`caught exception ${e}`);
       reject(e);
     }
