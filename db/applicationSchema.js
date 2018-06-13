@@ -13,8 +13,8 @@ var applicationSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    minlength: 1,
-    maxlength: 10
+    minlength: 3,
+    maxlength: 20
   },
   applicationName: {
     type: String,
