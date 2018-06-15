@@ -1,0 +1,13 @@
+{
+    "tenantId": "IBLTENANT",
+    "applicationCode": "FLUX-CDA",
+    "applicationName":"Flux Corporate Direct Access",
+    "enabled": true,
+    "logo": "assets/images/flux-cda.png",
+    "favicon": "assets/images/favicon.png",
+    "createdBy": "SYSTEM",
+    "updatedBy": "SYSTEM",
+    "createdDate": "2018-06-13T11:40:20",
+    "updatedDate": "2018-06-13T11:40:20",
+    "description": "Flux CDA is business application for mandate/payment processing"
+}
