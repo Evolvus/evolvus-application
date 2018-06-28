@@ -5,6 +5,7 @@ const applicationCollection = require("./db/application");
 const validate = require("jsonschema")
   .validate;
 const docketClient = require("evolvus-docket-client");
+const applicationDBschema=require("./db/applicationSchema");
 
 var docketObject = {
   // required fields
@@ -19,6 +20,11 @@ var docketObject = {
   details: "",
   //non required fields
   level: ""
+};
+
+module.exports.menu = {
+  applicationDBschema,
+  applicationSchema
 };
 
 module.exports.validate = (applicationObject) => {
@@ -152,24 +158,24 @@ module.exports.getById = (id) => {
   });
 };
 
-module.exports.getOne = (attribute, value) => {
+module.exports.getOne = (query) => {
   return new Promise((resolve, reject) => {
     try {
-      if (attribute == null || value == null || typeof attribute === 'undefined' || typeof value === 'undefined') {
-        throw new Error("IllegalArgumentException: attribute/value is null or undefined");
+      if (query == null) {
+        throw new Error("IllegalArgumentException: query is null or undefined");
       }
 
       docketObject.name = "application_getOne";
-      docketObject.keyDataAsJSON = `applicationObject ${attribute} with value ${value}`;
+      docketObject.keyDataAsJSON = `applicationObject ${query}`;
       docketObject.details = `application getById initiated`;
       docketClient.postToDocket(docketObject);
-      applicationCollection.findOne(attribute, value).then((data) => {
+      applicationCollection.findOne(query).then((data) => {
         if (data) {
           debug(`application found ${data}`);
           resolve(data);
         } else {
           // return empty object in place of null
-          debug(`no application found by this ${attribute} ${value}`);
+          debug(`no application found by this ${query}`);
           resolve({});
         }
       }).catch((e) => {
@@ -177,7 +183,7 @@ module.exports.getOne = (attribute, value) => {
       });
     } catch (e) {
       docketObject.name = "application_ExceptionOngetOne";
-      docketObject.keyDataAsJSON = `applicationObject ${attribute} with value ${value}`;
+      docketObject.keyDataAsJSON = `applicationObject ${query}`;
       docketObject.details = `caught Exception on application_getOne ${e.message}`;
       docketClient.postToDocket(docketObject);
       debug(`caught exception ${e}`);
@@ -191,18 +197,18 @@ module.exports.update = (id, update) => {
     try {
       if (typeof id == "undefined" || id == null || typeof update == "undefined" || update == null) {
         throw new Error("IllegalArgumentException:id/update is null or undefined");
-      } 
+      }
       docketObject.name = "application_getOne";
       docketObject.keyDataAsJSON = `applicationObject ${id} to be updated with  ${update}`;
       docketObject.details = `application getById initiated`;
       docketClient.postToDocket(docketObject);
-        applicationCollection.update(id, update).then((resp) => {
-          debug("updated successfully",resp);
-          resolve(resp);
-        }).catch((error) => {
-          debug(`failed to update ${error}`);
-          reject(error);
-        });
+      applicationCollection.update(id, update).then((resp) => {
+        debug("updated successfully", resp);
+        resolve(resp);
+      }).catch((error) => {
+        debug(`failed to update ${error}`);
+        reject(error);
+      });
     } catch (e) {
       docketObject.name = "application_ExceptionOngetOne";
       docketObject.keyDataAsJSON = `applicationObject ${id} to be updated with  ${update}`;

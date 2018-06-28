@@ -248,9 +248,10 @@ describe("db application testing", () => {
 
     it("should return object for valid attribute value", (done) => {
       // take one valid attribute and its value
-      let attributename = "applicationName";
-      let attributeValue = "Docket";
-      let res = application.findOne(attributename, attributeValue);
+
+      let res = application.findOne({
+        applicationName: "Docket"
+      });
       expect(res)
         .to.eventually.have.property("applicationName")
         .to.eql("Docket")
@@ -258,7 +259,9 @@ describe("db application testing", () => {
     });
 
     it("should return null as no application is identified by this attribute ", (done) => {
-      let res = application.findOne("applicationCode", "CDA");
+      let res = application.findOne({
+        applicationCode: "CDA"
+      });
       expect(res)
         .to.eventually.to.eql(null)
         .notify(done);
@@ -288,11 +291,11 @@ describe("db application testing", () => {
     });
 
     it('should update a application ', (done) => {
-      var res=application.update(id,update);
+      var res = application.update(id, update);
       expect(res).to.eventually.be.a("object")
-      .to.have.property("applicationName")
-      .to.eql(update.applicationName)
-      .notify(done);
+        .to.have.property("applicationName")
+        .to.eql(update.applicationName)
+        .notify(done);
     });
 
     it("should be rejected when there is no application matching the parameter id", (done) => {

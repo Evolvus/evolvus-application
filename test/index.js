@@ -362,7 +362,9 @@ describe('application model validation', () => {
     it("should return one application record identified by attribute", (done) => {
       try {
         // take one attribute from object1 or object2 and its value
-        let res = application.getOne("applicationCode", "CDA");
+        let res = application.getOne({
+          applicationCode: "CDA"
+        });
         expect(res)
           .to.eventually.be.a("object")
           .to.have.property('applicationCode')
@@ -376,7 +378,9 @@ describe('application model validation', () => {
     it('should return empty object i.e. {} as no application is identified by this attribute', (done) => {
       try {
         // replace validAttribute and add a bad value to it
-        var res = application.getOne("applicationCode", "KMK");
+        var res = application.getOne({
+          applicationCode: "KMK"
+        });
         expect(res).to.eventually.to.eql({})
           .notify(done);
       } catch (e) {
@@ -384,11 +388,11 @@ describe('application model validation', () => {
       }
     });
 
-    it("should throw IllegalArgumentException for undefined Attribute parameter ", (done) => {
+    it("should throw IllegalArgumentException for undefined query parameter ", (done) => {
       try {
         //replace validvalue with a valid value for an attribute
-        let undefinedAttribute;
-        let res = application.getOne(undefinedAttribute, "CDA");
+        let undefinedQuery;
+        let res = application.getOne(undefinedQuery);
         expect(res)
           .to.eventually.to.be.rejectedWith("IllegalArgumentException")
           .notify(done);
@@ -397,23 +401,10 @@ describe('application model validation', () => {
       }
     });
 
-    it("should throw IllegalArgumentException for undefined Attribute parameter ", (done) => {
-      try {
-        // replace validAttribute with a valid attribute name
-        let undefinedValue;
-        let res = application.getOne("applicationName", undefinedValue);
-        expect(res)
-          .to.eventually.to.be.rejectedWith("IllegalArgumentException")
-          .notify(done);
-      } catch (e) {
-        expect.fail(e, null, `exception: ${e}`);
-      }
-    });
-
-    it("should throw IllegalArgumentException for null attribute parameter ", (done) => {
+    it("should throw IllegalArgumentException for null query parameter ", (done) => {
       try {
         //replace validValue with a valid value for an attribute
-        let res = application.getOne(null, "CDA");
+        let res = application.getOne(null);
         expect(res)
           .to.eventually.to.be.rejectedWith("IllegalArgumentException")
           .notify(done);
@@ -422,17 +413,6 @@ describe('application model validation', () => {
       }
     });
 
-    it("should throw IllegalArgumentException for null value parameter ", (done) => {
-      try {
-        //replace attributeValue with a valid attribute name
-        let res = application.getOne("tenantId", null);
-        expect(res)
-          .to.eventually.to.be.rejectedWith("IllegalArgumentException")
-          .notify(done);
-      } catch (e) {
-        expect.fail(e, null, `exception: ${e}`);
-      }
-    });
   });
 
   describe("testing updateApplication", () => {
@@ -468,27 +448,27 @@ describe('application model validation', () => {
     });
 
     it('should update a application and have same _id', (done) => {
-      var res=application.update(id,{
+      var res = application.update(id, {
         applicationName: "FLUX RTP",
         createdBy: "Kavya"
       });
       expect(res)
-      .to.eventually.be.a("object")
-      .to.have.property("_id")
-      .to.eql(id)
-      .notify(done);
+        .to.eventually.be.a("object")
+        .to.have.property("_id")
+        .to.eql(id)
+        .notify(done);
     });
 
     it('should update a application with new values', (done) => {
-      var res=application.update(id,{
+      var res = application.update(id, {
         applicationName: "FLUX RTP",
         createdBy: "Kavya"
       });
       expect(res)
-      .to.eventually.be.a("object")
-      .to.have.property("applicationName")
-      .to.eql("FLUX RTP")
-      .notify(done);
+        .to.eventually.be.a("object")
+        .to.have.property("applicationName")
+        .to.eql("FLUX RTP")
+        .notify(done);
     });
 
     it("should be rejected for wrong type of applicationName input ", (done) => {

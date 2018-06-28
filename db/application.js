@@ -53,11 +53,11 @@ module.exports.findAll = (limit) => {
 // If there is no object matching the attribute/value, return empty object i.e. {}
 // null, undefined should be rejected with Invalid Argument Error
 // Should return a Promise
-module.exports.findOne = (attribute, value) => {
+module.exports.findOne = (query) => {
   return new Promise((resolve, reject) => {
     try {
-      var query = {};
-      query[attribute] = value;
+      // var query = {};
+      // query[attribute] = value;
       applicationCollection.findOne(query)
         .then((data) => {
           debug(`application found ${data}`);
@@ -116,10 +116,10 @@ module.exports.update = (id, update) => {
       }).then((app) => {
         if (app) {
           app.set(update);
-          app.save().then((res)=> {
+          app.save().then((res) => {
             debug(`updated successfully ${res}`);
             resolve(res);
-          }).catch((e)=> {
+          }).catch((e) => {
             debug(`failed to update ${e}`);
             reject(e);
           });
