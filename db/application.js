@@ -55,35 +55,11 @@ module.exports.findAll = (limit) => {
 // If there is no object matching the attribute/value, return empty object i.e. {}
 // null, undefined should be rejected with Invalid Argument Error
 // Should return a Promise
-<<<<<<< HEAD
 module.exports.findOne = (query) => {
-  return new Promise((resolve, reject) => {
-    try {
-      // var query = {};
-      // query[attribute] = value;
-      applicationCollection.findOne(query)
-        .then((data) => {
-          debug(`application found ${data}`);
-          resolve(data);
-        }, (err) => {
-          debug(`rejected find.. ${err}`);
-          reject(err);
-        })
-        .catch((e) => {
-          debug(`exception on find: ${e}`);
-          reject(e);
-        });
-    } catch (e) {
-      debug(`caught exception: ${e}`);
-      reject(e);
-    }
-  });
-=======
-module.exports.findOne = (attribute, value) => {
     return new Promise((resolve, reject) => {
         try {
-            var query = {};
-            query[attribute] = value;
+            // var query = {};
+            // query[attribute] = value;
             applicationCollection.findOne(query)
                 .then((data) => {
                     debug(`application found ${data}`);
@@ -101,7 +77,6 @@ module.exports.findOne = (attribute, value) => {
             reject(e);
         }
     });
->>>>>>> ed8e3df3a9ec099f4a1fb15a9bf93c597b75d32e
 };
 
 //
@@ -114,8 +89,8 @@ module.exports.findById = (id) => {
     return new Promise((resolve, reject) => {
         try {
             applicationCollection.findById({
-                    _id: new ObjectId(id)
-                })
+                _id: new ObjectId(id)
+            })
                 .then((res) => {
                     debug("findById successfull: ", res);
                     resolve(res);
@@ -136,25 +111,6 @@ module.exports.findById = (id) => {
 
 //Finds one application by its code and updates it with new values
 module.exports.update = (id, update) => {
-<<<<<<< HEAD
-  return new Promise((resolve, reject) => {
-    try {
-      applicationCollection.findById({
-        _id: new ObjectId(id)
-      }).then((app) => {
-        if (app) {
-          app.set(update);
-          app.save().then((res) => {
-            debug(`updated successfully ${res}`);
-            resolve(res);
-          }).catch((e) => {
-            debug(`failed to update ${e}`);
-            reject(e);
-          });
-        } else {
-          debug(`application not found with id, ${id}`);
-          reject(`There is no such application with id:${id}`);
-=======
     return new Promise((resolve, reject) => {
         try {
             applicationCollection.findById({
@@ -173,14 +129,11 @@ module.exports.update = (id, update) => {
                     debug(`application not found with id, ${id}`);
                     reject(`There is no such application with id:${id}`);
                 }
-            }).catch((e) => {
-                debug(`exception on findById ${e}`);
-                reject(e.message);
             });
-        } catch (e) {
-            debug(`caught exception ${e}`);
-            reject(e.message);
->>>>>>> ed8e3df3a9ec099f4a1fb15a9bf93c597b75d32e
+        }
+        catch (e) {
+            debug(`caught exception: ${e}`);
+            reject(e);
         }
     });
 };
